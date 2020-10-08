@@ -1,35 +1,16 @@
 function reverse(x: number) : number {
-  if (x === 0) {
-    return 0;
-  }
-  const varray = x.toString().split('');
-  const reverseValues = (values: string[]) : number => {
-    let z = true;
-    let y = 0;
-    const rv = [];
-
-    for (let i = values.length - 1; i >= 0; i--) {
-      rv[y] = values[i];
-      y++;
+  let v = x;
+  let r = 0;
+  while (v != 0) {
+    const p = v % 10;
+    v = Math.trunc(v / 10); 
+    r = r * 10 + p;
+    if (r < -2147483648 || r > 2147483647) {
+      return 0;
     }
-
-    return parseInt(rv.reduce((acc: string[], v: string) => {
-      if (v === "0" && z) {
-        return acc;
-      }
-      z = false;
-      acc.push(v);
-      return acc;
-    }, []).join(''), 10);
-  };
-
-  const c = (x < 0) ? -(reverseValues(varray.slice(1))) : reverseValues(varray);
-
-  if (c >= -2147483648 && c <= 2147483647) {
-    return c;
   }
-  return 0;
-};
+  return r;
+}
 
 import { assert } from "https://deno.land/std@0.73.0/testing/asserts.ts";
 
