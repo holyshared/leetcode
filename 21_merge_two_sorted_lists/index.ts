@@ -7,6 +7,31 @@ class ListNode {
   }
 }
 
+const toArray = (ln: ListNode | null) : number[] => {
+  if (!ln) {
+    return [];
+  }
+  let c = ln;
+
+  if (!c.next) {
+    if (c.val !== undefined) {
+      return [c.val];
+    } else {
+      return [];
+    }
+  }
+
+  const o = [];
+
+  while (c.next) {
+    o.push(c.val);
+    c = c.next;
+  }
+  o.push(c.val);
+
+  return o;
+};
+
 function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | null {
   const appendUntil = (lv: ListNode, pv: number, out: number[]): ListNode | null => {
     let c = lv as ListNode | null;
@@ -60,33 +85,8 @@ function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | nul
   return result;
 }
 
-
 import { assert } from "https://deno.land/std@0.73.0/testing/asserts.ts";
 
-const toArray = (ln: ListNode | null) : number[] => {
-  if (!ln) {
-    return [];
-  }
-  let c = ln;
-
-  if (!c.next) {
-    if (c.val !== undefined) {
-      return [c.val];
-    } else {
-      return [];
-    }
-  }
-
-  const o = [];
-
-  while (c.next) {
-    o.push(c.val);
-    c = c.next;
-  }
-  o.push(c.val);
-
-  return o;
-};
 /*
 Deno.test("input: l1 = [1,2,4], l2 = [1,3,4]", () => {
   const values = toArray(e1);
