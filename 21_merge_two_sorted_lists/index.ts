@@ -8,7 +8,7 @@ class ListNode {
 }
 
 function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-  const appendM = (lv: ListNode, pv: number, out: number[]): ListNode | null => {
+  const appendUntil = (lv: ListNode, pv: number, out: number[]): ListNode | null => {
     let c = lv as ListNode | null;
     while (c && pv > c.val) {
       out.push(c.val);
@@ -36,16 +36,16 @@ function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | nul
 
     if ((l1c as ListNode).val < (l2c as ListNode).val) {
       const end = (l2c as ListNode).val;
-      l1c = appendM(l1c as ListNode, end, out);
+      l1c = appendUntil(l1c as ListNode, end, out);
       out = out.concat(_mergeTwoLists(l1c, l2c));
     } else if ((l1c as ListNode).val > (l2c as ListNode).val) {
       const end = (l1c as ListNode).val;
-      l2c = appendM(l2c as ListNode, end, out);
+      l2c = appendUntil(l2c as ListNode, end, out);
       out = out.concat(_mergeTwoLists(l1c, l2c));
     } else {
       const end = (l1c as ListNode).val;
-      l1c = appendM(l1c as ListNode, end + 1, out);
-      l2c = appendM(l2c as ListNode, end + 1, out);
+      l1c = appendUntil(l1c as ListNode, end + 1, out);
+      l2c = appendUntil(l2c as ListNode, end + 1, out);
       out = out.concat(_mergeTwoLists(l1c, l2c));
     }
   
