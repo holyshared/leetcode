@@ -79,6 +79,14 @@ Deno.test("input: l1 = [2,4,3], l2 = [5,6,4]", () => {
   assert(sum(addTwoNumbers(l1, l2)) === 708);
 });
 
+
+Deno.test("input: l1 = [101], l2 = [101]", () => {
+  const l1 = new ListNode(1, new ListNode(0, new ListNode(1)));
+  const l2 = new ListNode(1, new ListNode(0, new ListNode(1)));
+  assert(sum(addTwoNumbers(l1, l2)) === 202);
+});
+
+
 Deno.test("input: l1 = [0], l2 = [0]", () => {
   const l1 = new ListNode(0);
   const l2 = new ListNode(0);
