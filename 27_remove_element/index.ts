@@ -1,4 +1,16 @@
 function removeElement(nums: number[], val: number): number {
+  let ip = 0;
+  let len = nums.length;
+
+  for (let i = 0; i < len; i++) {
+    if (nums[i] !== val) {
+      nums[ip] = nums[i];
+      ip++;
+    }
+  }
+  nums.splice(ip);
+
+  return nums.length;
 }
 
 import { assert } from "https://deno.land/std@0.73.0/testing/asserts.ts";
@@ -17,7 +29,7 @@ Deno.test("nums = [0,1,2,2,3,0,4,2], val = 2", () => {
   assert(len === 5);
   assert(nums[0] === 0);
   assert(nums[1] === 1);
-  assert(nums[2] === 4);
+  assert(nums[2] === 3);
   assert(nums[3] === 0);
-  assert(nums[4] === 3);
+  assert(nums[4] === 4);
 });
