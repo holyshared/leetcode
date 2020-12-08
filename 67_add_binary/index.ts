@@ -8,48 +8,28 @@ function addBinary(a: string, b: string): string {
   let r = "";
 
   if (al > bl) {
-//    return '';
-
     let diff = al - bl;
     bv = "0".repeat(diff) + b;
     av = a;
     ml = al;
-
   } else if (al < bl) {
     let diff = bl - al;
     av = "0".repeat(diff) + a;
     bv = b;
     ml = bl;
-
-//    console.log(av);
-   /// console.log(bv);
-
-//    return r;
   }
-
 
   let c = false;
   for (let i = ml - 1; i >= 0; i--) {
-    // 1 1
-
-    // 11
-    //  1 
-    // 11
-    // 11
     if (av[i] === "1" && bv[i] === "1" && c) {
-      console.log(3);
       r = "1" + r;
       c = true;
     } else if (av[i] === "1" && bv[i] === "1" || (av[i] === "1" || bv[i] === "1") && c) {
       r = "0" + r;
       c = true;
     } else if (av[i] === "1" || bv[i] === "1" || c) {
-      console.log('xxx');
-      console.log(r);
       r = "1" + r;
       c = false;
-//        return r;
-    // 0 0
     } else {
       r = "0" + r;
       c = false;
