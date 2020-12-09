@@ -30,17 +30,13 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
   if (!curr.next) {
     return result;
   }
-//  curr = curr.next;
 
   while (curr.next !== null) {
-    if (curr.val === curr.next.val) {
-      curr = curr.next;
-      continue;
-    } else {
+    if (curr.val !== curr.next.val) {
       out.next = new ListNode(curr.next.val);
       out = out.next;
-      curr = curr.next;
     }
+    curr = curr.next;
   }
 
   return result;
