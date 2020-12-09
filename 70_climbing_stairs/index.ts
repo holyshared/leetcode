@@ -1,14 +1,18 @@
 function climbStairs(n: number): number {
-  const _climbStairs = (cn: number, c: number): number => {
-    if (c > cn) {
+  const _climbStairs = (n: number, step: number, cache: number[]): number => {
+    if (step > n) {
       return 0;
     }
-    if (c === cn) {
+    if (step === n) {
       return 1;
     }
-    return _climbStairs(cn, c + 1) + _climbStairs(cn, c + 2);
+    if (cache[step] > 0) {
+      return cache[step];
+    }
+    cache[step] = _climbStairs(n, step + 1, cache) + _climbStairs(n, step + 2, cache);
+    return cache[step];
   };
-  return _climbStairs(n, 0); 
+  return _climbStairs(n, 0, new Array(n + 1));
 }
 
 import { assertEquals } from "https://deno.land/std@0.73.0/testing/asserts.ts";
