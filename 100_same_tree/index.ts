@@ -12,25 +12,15 @@ class TreeNode {
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
   if (p === null && q === null) {
     return true;
-  } else if (p !== null && q === null) {
-    return false;
-  } else if (p === null && q !== null) {
+  } else if (p !== null && q === null || p === null && q !== null) {
     return false;
   } else if (p!.val !== q!.val) {
     return false;
   }
 
-
-  if (p?.left !== null && q?.left === null) {
+  if (p?.left !== null && q?.left === null || p?.left === null && q?.left !== null) {
     return false;
-  }
-  if (p?.left === null && q?.left !== null) {
-    return false;
-  }
-  if (p?.right !== null && q?.right === null) {
-    return false;
-  }
-  if (p?.right === null && q?.right !== null) {
+  } else if (p?.right !== null && q?.right === null || p?.right === null && q?.right !== null) {
     return false;
   }
 
