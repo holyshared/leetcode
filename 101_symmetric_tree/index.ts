@@ -9,18 +9,20 @@ class TreeNode {
   }
 }
 
-function isMirror(left: TreeNode | null, right: TreeNode | null): boolean {
-  if (left === null && right === null) {
+function isTreeNode(node: TreeNode | null): node is TreeNode {
+  return node !== undefined && node !== null;
+}
+
+function isMirror(left: TreeNode | null, right: TreeNode | null) : boolean {
+  if (!isTreeNode(left) && !isTreeNode(right)) {
     return true;
-  } else if (left !== null && right === null || left === null && right !== null) {
+  } else if (isTreeNode(left) && !isTreeNode(right) || !isTreeNode(left) && isTreeNode(right)) {
     return false;
   } else {
-    const l = (left as TreeNode);
-    const r = (right as TreeNode);
-    if (l.val !== r.val) {
+    if (left.val !== right.val) {
       return false;
     }
-    return isMirror(l.right, r.left) && isMirror(l.left, r.right);
+    return isMirror(left.right, right.left) && isMirror(left.left, right.right);
   }
 }
 
