@@ -10,8 +10,9 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func _levelOrderBottom(root *TreeNode, depth int, outputs [][]int) [][]int {
-	if len(outputs) <= depth {
+func _levelOrderBottom(root *TreeNode, depth int, outputs map[int][]int) map[int][]int {
+	_, ok := outputs[depth]
+	if !ok {
 		outputs[depth] = []int{}
 	}
 
@@ -33,8 +34,12 @@ func _levelOrderBottom(root *TreeNode, depth int, outputs [][]int) [][]int {
 
 
 func levelOrderBottom(root *TreeNode) [][]int {
-	results := [][]int{{}, {}, {}}
+	results := map[int][]int{}
 	reversedResults := [][]int{}
+
+	if root == nil {
+		return reversedResults
+	}
 
 	results = _levelOrderBottom(root, 0, results)
 
