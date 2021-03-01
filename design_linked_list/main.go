@@ -74,6 +74,22 @@ func (this *MyLinkedList) AddAtIndex(index int, val int) {
 
 /** Delete the index-th node in the linked list, if the index is valid. */
 func (this *MyLinkedList) DeleteAtIndex(index int) {
+	// 1 2 3 -> 2 3
+	if index == 0 {
+		if this.Head == nil {
+			return
+		}
+		next, _ := this.findAt(index + 1)
+		this.Head.Next = next
+		// 1 2 3 -> 1 3
+	} else {
+		prev, _ := this.findAt(index - 1)
+		if prev == nil {
+			return
+		}
+		next, _ := this.findAt(index + 1)
+		prev.Next = next
+	}
 }
 
 func (this *MyLinkedList) findAt(index int) (*Item, int) {
