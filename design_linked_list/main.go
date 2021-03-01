@@ -63,11 +63,9 @@ func (this *MyLinkedList) AddAtTail(val int) {
 /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
 func (this *MyLinkedList) AddAtIndex(index int, val int) {
 	if index == 0 {
-		if this.Head == nil {
-			return
-		}
 		this.Head = &Item{Val: val, Next: this.Head}
 	} else {
+		// 20 10
 		prev, _ := this.findAt(index - 1)
 		if prev == nil {
 			return
@@ -101,6 +99,7 @@ func (this *MyLinkedList) findAt(index int) (*Item, bool) {
 	if this.Head == nil {
 		return nil, false
 	}
+	// 20 30 10
 
 	var i int
 	curr := this.Head

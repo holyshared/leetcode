@@ -126,3 +126,20 @@ func TestDeleteAtIndex(t *testing.T) {
 		t.Fatalf("fatal: %v", actual)
 	}
 }
+
+func Test__c(t *testing.T) {
+	var actual int
+
+	//	["MyLinkedList","addAtIndex","addAtIndex","addAtIndex","get"]
+	//[[],[0,10],[0,20],[1,30],[0]]
+
+	l := Constructor()
+	l.AddAtIndex(0, 10)
+	l.AddAtIndex(0, 20)
+	l.AddAtIndex(1, 30)
+
+	actual = l.Get(0)
+	if actual != 20 {
+		t.Fatalf("fatal: %v", actual)
+	}
+}
