@@ -97,3 +97,32 @@ func TestAddAtIndex(t *testing.T) {
 	}
 
 }
+
+func TestDeleteAtIndex(t *testing.T) {
+	var actual int
+
+	l := Constructor()
+	l.AddAtTail(1)
+	l.AddAtTail(2)
+	l.DeleteAtIndex(1)
+
+	actual = l.Get(1)
+	if actual != -1 {
+		t.Fatalf("fatal: %v", actual)
+	}
+
+	actual = l.Get(0)
+	if actual != 1 {
+		t.Fatalf("fatal: %v", actual)
+	}
+
+	l2 := Constructor()
+	l2.AddAtTail(1)
+	l2.AddAtTail(2)
+	l2.DeleteAtIndex(0)
+
+	actual = l2.Get(0)
+	if actual != 2 {
+		t.Fatalf("fatal: %v", actual)
+	}
+}

@@ -16,18 +16,23 @@ func Constructor() MyLinkedList {
 
 /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
 func (this *MyLinkedList) Get(index int) int {
-	if this.Head == nil {
+	curr, ok := this.findAt(index)
+	if !ok {
 		return -1
 	}
 
-	var i int
-	curr := this.Head
-	for i = 0; curr.Next != nil && i < index; i++ {
-		curr = curr.Next
-	}
-	if curr.Next == nil && i < index {
-		return -1
-	}
+	//	if this.Head == nil {
+	//	return -1
+	//	}
+
+	//	var i int
+	//curr := this.Head
+	//for i = 0; curr.Next != nil && i < index; i++ {
+	//curr = curr.Next
+	//	}
+	//if curr.Next == nil && i < index {
+	//return -1
+	//	}
 
 	return curr.Val
 }
@@ -80,7 +85,7 @@ func (this *MyLinkedList) DeleteAtIndex(index int) {
 			return
 		}
 		next, _ := this.findAt(index + 1)
-		this.Head.Next = next
+		this.Head = next
 		// 1 2 3 -> 1 3
 	} else {
 		prev, _ := this.findAt(index - 1)
@@ -92,9 +97,9 @@ func (this *MyLinkedList) DeleteAtIndex(index int) {
 	}
 }
 
-func (this *MyLinkedList) findAt(index int) (*Item, int) {
+func (this *MyLinkedList) findAt(index int) (*Item, bool) {
 	if this.Head == nil {
-		return nil, -1
+		return nil, false
 	}
 
 	var i int
@@ -103,10 +108,10 @@ func (this *MyLinkedList) findAt(index int) (*Item, int) {
 		curr = curr.Next
 	}
 	if curr.Next == nil && i < index {
-		return nil, -1
+		return nil, false
 	}
 
-	return curr, index
+	return curr, true
 }
 
 /**
