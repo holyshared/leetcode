@@ -6,27 +6,16 @@ type ListNode struct {
 }
 
 func reverseList(head *ListNode) *ListNode {
-	if head == nil {
-		return nil
-	}
-
 	curr := head
-	orders := []*ListNode{}
+	prev *ListNode := nil
 
-	i := 0
-	for curr.Next != nil {
-		orders = append(orders, curr)
-		curr = curr.Next
-		i++
+	// example: 1->2-3->4
+	for curr != nil {
+		nextTemp := curr.Next // 2 3 4
+		curr.Next = prev // nil 1 2
+		prev = curr // 1 2
+		curr = nextTemp // 2 3
 	}
-	orders = append(orders, curr)
 
-	rev, revHead := orders[i], orders[i]
-	for j := len(orders) - 1; j >= 0; j-- {
-		rev.Next = orders[j]
-		rev = rev.Next
-	}
-	rev.Next = nil
-
-	return revHead
+	return prev
 }
