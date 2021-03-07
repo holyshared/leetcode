@@ -18,69 +18,78 @@ func (this *MyHashMap) storeKey(key int) int {
 	return key % 1000000
 }
 
-/** value will always be non-negative. */
-func (this *MyHashMap) Put(key int, value int) {
+func (this *MyHashMap) getEntries(key int) []*EntryVal {
 	k := this.storeKey(key)
 	items := this.entries[k]
 	if items == nil {
-		items = []*EntryVal{}
-		items = append(items, &EntryVal{Key: key, Val: value})
-	} else if len(items) <= 0 {
-		items = append(items, &EntryVal{Key: key, Val: value})
-	} else {
-		var entry *EntryVal
-		i := 0
-		for i = 0; i < len(items); i++ {
-			entry = items[i]
-			if key != entry.Key {
-				continue
-			}
-			break
-		}
-		if i > len(items) {
-			items = append(items, &EntryVal{Key: key, Val: value})
-		} else {
-			entry.Val = value
+		return []*EntryVal{}
+	}
+	return items
+}
+
+func (this *MyHashMap) findEntry(key int) (*EntryVal, bool) {
+	items := this.getEntries(key)
+	if len(items) <= 0 {
+		return nil, false
+	}
+
+	var entry *EntryVal
+	for _, entry = range items {
+		if key == entry.Key {
+			return entry, true
 		}
 	}
-	this.entries[k] = items
+
+	return nil, false
+}
+
+func (this *MyHashMap) findEntryIndex(key int) (int, bool) {
+	items := this.getEntries(key)
+	if len(items) <= 0 {
+		return -1, false
+	}
+
+	for i, entry := range items {
+		if key == entry.Key {
+			return i, true
+		}
+	}
+
+	return -1, false
+}
+
+func (this *MyHashMap) addEntry(key int, value int) {
+	items := this.getEntries(key)
+	this.entries[this.storeKey(key)] = append(items, &EntryVal{Key: key, Val: value})
+}
+
+/** value will always be non-negative. */
+func (this *MyHashMap) Put(key int, value int) {
+	entry, ok := this.findEntry(key)
+	if ok {
+		entry.Val = value
+		return
+	}
+	this.addEntry(key, value)
 }
 
 /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
 func (this *MyHashMap) Get(key int) int {
-	k := this.storeKey(key)
-	items := this.entries[k]
-
-	if items == nil {
+	entry, ok := this.findEntry(key)
+	if !ok {
 		return -1
 	}
-
-	for _, entry := range items {
-		if key != entry.Key {
-			continue
-		}
-		return entry.Val
-	}
-
-	return -1
+	return entry.Val
 }
 
 /** Removes the mapping of the specified value key if this map contains a mapping for the key */
 func (this *MyHashMap) Remove(key int) {
-	k := this.storeKey(key)
-	items := this.entries[k]
-	if items == nil {
+	i, ok := this.findEntryIndex(key)
+	if !ok {
 		return
 	}
-
-	for i := 0; i < len(items); i++ {
-		entry := items[i]
-		if key != entry.Key {
-			continue
-		}
-		items = append(items[:i], items[(i+1):]...)
-	}
-	this.entries[k] = items
+	items := this.getEntries(key)
+	this.entries[this.storeKey(key)] = append(items[:i], items[(i+1):]...)
 }
 
 /**

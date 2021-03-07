@@ -70,16 +70,27 @@ func TestHashMapRemove(t *testing.T) {
 }
 
 func TestHashMapPutNoValue(t *testing.T) {
+	actual := 0
 
 	hm := Constructor()
 	hm.Remove(27)
 	hm.Put(65, 65)
 	hm.Remove(19)
 	hm.Remove(0)
-	hm.Get(18)
+
+	actual = hm.Get(18)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(3)
 	hm.Put(42, 0)
-	hm.Get(19)
+
+	actual = hm.Get(19)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(42)
 	hm.Put(17, 90)
 	hm.Put(31, 76)
@@ -95,23 +106,48 @@ func TestHashMapPutNoValue(t *testing.T) {
 	hm.Remove(42)
 	hm.Put(51, 40)
 	hm.Put(33, 76)
-	hm.Get(17)
+
+	actual = hm.Get(17)
+	if actual != 90 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(89, 95)
-	hm.Get(95)
+
+	actual = hm.Get(95)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(30, 31)
 	hm.Put(37, 99)
-	hm.Get(51)
+
+	actual = hm.Get(51)
+	if actual != 40 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(95, 35)
 	hm.Remove(65)
 	hm.Remove(81)
 	hm.Put(61, 46)
 	hm.Put(50, 33)
-	hm.Get(59)
+
+	actual = hm.Get(59)
+	if actual != 29 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(5)
 	hm.Put(75, 89)
 	hm.Put(80, 17)
 	hm.Put(35, 94)
-	hm.Get(80)
+
+	actual = hm.Get(80)
+	if actual != 17 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(19, 68)
 	hm.Put(13, 17)
 	hm.Remove(70)
@@ -121,21 +157,44 @@ func TestHashMapPutNoValue(t *testing.T) {
 	hm.Remove(13)
 	hm.Put(90, 83)
 	hm.Remove(41)
-	hm.Get(50)
+
+	actual = hm.Get(50)
+	if actual != 33 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(29, 98)
 	hm.Put(54, 72)
 	hm.Put(6, 8)
 	hm.Put(51, 88)
 	hm.Remove(13)
 	hm.Put(8, 22)
-	hm.Get(85)
+
+	actual = hm.Get(85)
+	if actual != 18 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(31, 22)
 	hm.Put(60, 9)
-	hm.Get(96)
+
+	actual = hm.Get(96)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(6, 35)
 	hm.Remove(54)
-	hm.Get(15)
-	hm.Get(28)
+
+	actual = hm.Get(15)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+	actual = hm.Get(28)
+	if actual != 35 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(51)
 	hm.Put(80, 69)
 	hm.Put(58, 92)
@@ -143,14 +202,27 @@ func TestHashMapPutNoValue(t *testing.T) {
 	hm.Put(91, 56)
 	hm.Put(83, 52)
 	hm.Put(8, 48)
-	hm.Get(62)
-	hm.Get(54)
+
+	actual = hm.Get(62)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+	actual = hm.Get(54)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(25)
 	hm.Put(36, 4)
 	hm.Put(67, 68)
 	hm.Put(83, 36)
 	hm.Put(47, 58)
-	hm.Get(82)
+
+	actual = hm.Get(82)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(36)
 	hm.Put(30, 85)
 	hm.Put(33, 87)
@@ -164,13 +236,22 @@ func TestHashMapPutNoValue(t *testing.T) {
 	hm.Put(15, 7)
 	hm.Remove(5)
 	hm.Remove(42)
-	hm.Get(20)
+
+	actual = hm.Get(20)
+	if actual != -1 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Remove(65)
 	hm.Put(57, 9)
 	hm.Put(2, 41)
 	hm.Remove(6)
-	hm.Get(33)
+
+	actual = hm.Get(33)
+	if actual != 87 {
+		t.Fatal("oops!!")
+	}
+
 	hm.Put(16, 44)
 	hm.Put(95, 30)
-
 }
