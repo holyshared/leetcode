@@ -25,6 +25,8 @@ func (this *MyHashMap) Put(key int, value int) {
 	if items == nil {
 		items = []*EntryVal{}
 		items = append(items, &EntryVal{Key: key, Val: value})
+	} else if len(items) <= 0 {
+		items = append(items, &EntryVal{Key: key, Val: value})
 	} else {
 		var entry *EntryVal
 		i := 0
@@ -33,6 +35,7 @@ func (this *MyHashMap) Put(key int, value int) {
 			if key != entry.Key {
 				continue
 			}
+			break
 		}
 		if i > len(items) {
 			items = append(items, &EntryVal{Key: key, Val: value})
