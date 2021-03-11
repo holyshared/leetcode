@@ -66,3 +66,37 @@ func Test123781112910456(t *testing.T) {
 	}
 
 }
+
+/*
+ 1 -> null
+ 2 -> null
+ 3 -> null
+*/
+// [1,null,2,null,3,null]
+
+func Test123(t *testing.T) {
+
+	v1 := &Node{Val: 1}
+	v2 := &Node{Val: 2}
+	v3 := &Node{Val: 3}
+	v1.Child = v2
+	v2.Child = v3
+
+	actual := flatten(v1)
+
+	fmt.Println("actual next---------")
+	next := actual
+	for next.Next != nil {
+		fmt.Println(next.Val)
+		next = next.Next
+	}
+	fmt.Println(next.Val)
+
+	fmt.Println("actual prev---------")
+	prev := next
+	for prev != nil {
+		fmt.Println(prev.Val)
+		prev = prev.Prev
+	}
+
+}

@@ -20,35 +20,27 @@ func _last(root *Node) *Node {
 func _flatten(root *Node) *Node {
 	curr := root
 
-	for curr.Next != nil {
+	for curr != nil {
 		if curr.Child != nil {
 			tmp := curr.Next
 			curr.Next = _flatten(curr.Child)
 			last := _last(curr.Next)
 			last.Next = tmp
-
-			fmt.Println("prev-----")
-			fmt.Printf("%d -> %d\n", tmp.Val, last.Val)
-
 			curr.Next.Prev = curr
-
-			tmp.Prev = last
+			if tmp != nil {
+				tmp.Prev = last
+			}
 			curr.Child = nil
 		}
 		fmt.Println(curr.Val)
 		curr = curr.Next
 	}
-
-	//	for curr.Prev != nil {
-	//	curr = curr.Prev
-	//	}
-	fmt.Println("new head ---")
-	fmt.Println(root.Val)
-
 	return root
 }
 
 func flatten(root *Node) *Node {
-	fmt.Println("start------")
+	if root == nil {
+		return root
+	}
 	return _flatten(root)
 }
