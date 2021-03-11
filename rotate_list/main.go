@@ -22,6 +22,7 @@ func rotateRight(head *ListNode, k int) *ListNode {
 
 	new := head
 	// 3 - 2000000000 % 3 - 1
+	// 要素数 - 試行回数 % 要素数 - 1
 	for i := 0; i < n-k%n-1; i++ {
 		new = new.Next
 	}
