@@ -6,13 +6,13 @@ import (
 
 var chars = []rune{'0', '1'}
 
-func pattern(s string, chars []rune, k int, substr []rune) bool {
+func pattern(s string, k int, substr []rune) bool {
 	if k == 0 {
 		return strings.Contains(s, string(substr))
 	}
 	for _, v := range chars {
 		substr = append(substr, v)
-		ok := pattern(s, chars, k-1, substr)
+		ok := pattern(s, k-1, substr)
 		if !ok {
 			return false
 		}
@@ -22,5 +22,5 @@ func pattern(s string, chars []rune, k int, substr []rune) bool {
 }
 
 func hasAllCodes(s string, k int) bool {
-	return pattern(s, chars, k, []rune{})
+	return pattern(s, k, []rune{})
 }
