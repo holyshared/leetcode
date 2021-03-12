@@ -1,24 +1,26 @@
 package main
 
-var chars = []string{"0", "1"}
+import (
+	"strings"
+)
 
-func pattern(chars []string, k int, paths []string, results [][]string) [][]string {
+var chars = []rune{'0', '1'}
+
+func pattern(s string, chars []rune, k int, substr []rune) bool {
 	if k == 0 {
-		fixed := make([]string, len(paths))
-		copy(fixed, paths)
-		results = append(results, fixed)
-		return results
+		return strings.Contains(s, string(substr))
 	}
 	for _, v := range chars {
-		paths = append(paths, v)
-		results = pattern(chars, k-1, paths, results)
-		paths = paths[:(len(paths) - 1)]
+		substr = append(substr, v)
+		ok := pattern(s, chars, k-1, substr)
+		if !ok {
+			return false
+		}
+		substr = substr[:(len(substr) - 1)]
 	}
-	return results
+	return true
 }
 
 func hasAllCodes(s string, k int) bool {
-	results := [][]string{}
-	results = pattern(chars, k, []string{}, results)
-	return true
+	return pattern(s, chars, k, []rune{})
 }
