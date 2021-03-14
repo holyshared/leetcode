@@ -10,25 +10,32 @@ func swapNodes(head *ListNode, k int) *ListNode {
 		return head
 	}
 
-	var nodes = []*ListNode{}
+	ll := 0
 
 	curr := head
 
 	for curr != nil {
-		nodes = append(nodes, curr)
+		ll++
 		curr = curr.Next
 	}
 
-	if (k-1 == len(nodes)-k) || len(nodes) <= 1 {
+	if (k-1 == ll-k) || ll <= 1 {
 		return head
 	}
 
-	t1 := nodes[k-1]
-	t2 := nodes[len(nodes)-k]
-	t1v := t1.Val
-	t2v := t2.Val
-	t1.Val = t2v
-	t2.Val = t1v
+	fcur := head
+	for i := 0; i < k-1; i++ {
+		fcur = fcur.Next
+	}
+	ecur := head
+	for j := 0; j < ll-k; j++ {
+		ecur = ecur.Next
+	}
+
+	fv := fcur.Val
+	ev := ecur.Val
+	fcur.Val = ev
+	ecur.Val = fv
 
 	return head
 }
