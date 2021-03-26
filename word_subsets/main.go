@@ -1,34 +1,55 @@
 package main
 
-import (
-	"strings"
-)
+type CharCount map[rune]int
 
-func wordSubsets(A []string, B []string) []string {
-	dep := map[rune]bool{}
-	bkeys := []rune{}
-	for i := 0; i < len(B); i++ {
-		for _, c := range []rune(B[i]) {
-			_, ok := dep[c]
+func calcCharCount(words []string) map[string]CharCount {
+	charCount := map[string]CharCount{}
+	for i := 0; i < len(words); i++ {
+		chars := []rune(words[i])
+		count := CharCount{}
+		for _, c := range chars {
+			curr, ok := count[c]
 			if ok {
-				continue
+				count[c] = curr + 1
+			} else {
+				count[c] = 1
 			}
-			dep[c] = true
-			bkeys = append(bkeys, c)
+		}
+		charCount[words[i]] = count
+	}
+	return charCount
+}
+
+func isInclude(ac CharCount, bc CharCount) bool {
+	for c, bcount := range bc {
+		acount, ok := ac[c]
+		// aにbがない
+		if !ok {
+			return false
+		}
+		if acount < bcount {
+			return false
 		}
 	}
+	return true
+}
+
+func wordSubsets(A []string, B []string) []string {
+	a := calcCharCount(A)
+	b := calcCharCount(B)
 
 	results := []string{}
-	for i := 0; i < len(A); i++ {
+
+	for aw, awc := range a {
 		matchAll := true
-		for _, c := range bkeys {
-			if strings.IndexRune(A[i], c) == -1 {
+		for _, bwc := range b {
+			if !isInclude(awc, bwc) {
 				matchAll = false
 				break
 			}
 		}
 		if matchAll {
-			results = append(results, A[i])
+			results = append(results, aw)
 		}
 	}
 	return results
