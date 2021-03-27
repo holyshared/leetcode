@@ -1,5 +1,7 @@
 package main
 
+import "strconv"
+
 func isPalindromic(chars []rune) bool {
 	if len(chars) == 1 {
 		return true
@@ -20,13 +22,32 @@ func isPalindromic(chars []rune) bool {
 func countSubstrings(s string) int {
 	chars := []rune(s)
 	l := len(chars)
+	palindromic := map[string]bool{}
 
 	count := 0
 	for i := 0; i < l; i++ {
 		for j := i + 1; j <= l; j++ {
-			if isPalindromic(chars[i:j]) {
+			prevKey := strconv.Itoa(i+1) + "-" + strconv.Itoa(j-1)
+			palindromiced, ok := palindromic[prevKey]
+
+			pass := false
+
+			if ok {
+				if palindromiced {
+					if chars[i] == chars[j] {
+						pass = true
+					}
+				}
+			} else {
+				pass = isPalindromic(chars[i:j])
+			}
+
+			if pass {
 				count++
 			}
+
+			key := strconv.Itoa(i) + "-" + strconv.Itoa(j)
+			palindromic[key] = true
 		}
 	}
 	return count
