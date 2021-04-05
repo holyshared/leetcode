@@ -1,23 +1,28 @@
 package main
 
+// A = 1, 2, 0
+/*
+l:
+1 2
+2 0 *
+
+g:
+1 2
+1 0 *
+2 0 *
+*/
+
 func isIdealPermutation(A []int) bool {
 	N := len(A)
+	floor := N
 
-	l := 0
-	for i := 0; i < N-1; i++ {
-		if A[i] > A[i+1] {
-			l++
+	for i := N - 1; i >= 2; i-- {
+		if floor > A[i] {
+			floor = A[i]
+		}
+		if A[i-2] > floor {
+			return false
 		}
 	}
-
-	g := 0
-	for i := 0; i < N; i++ {
-		for j := i + 1; j < N; j++ {
-			if A[i] > A[j] {
-				g++
-			}
-		}
-	}
-
-	return l == g
+	return true
 }
