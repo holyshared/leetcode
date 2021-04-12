@@ -1,32 +1,23 @@
 package main
 
-import "fmt"
-
-func _climbStairs(n int, curr int, path []int, result [][]int) [][]int {
-	fmt.Printf("%d > %d\n", curr, n)
-
-	if curr >= n {
-		dst := make([]int, len(path))
-		copy(dst, path)
-		result = append(result, dst)
-		return result
+func _climbStairs(n int, curr int, results []int) (int, []int) {
+	if curr > n {
+		return 0, results
 	}
+	if curr == n {
+		return 1, results
+	}
+	if results[curr] > 0 {
+		return results[curr], results
+	}
+	r1, results := _climbStairs(n, curr+1, results)
+	r2, results := _climbStairs(n, curr+2, results)
 
-	if n >= curr+1 {
-		path = append(path, 1)
-		result = _climbStairs(n, curr+1, path, result)
-		path = path[:(len(path) - 1)]
-	}
-	if n >= curr+2 {
-		path = append(path, 2)
-		result = _climbStairs(n, curr+2, path, result)
-		path = path[:(len(path) - 1)]
-	}
-	return result
+	results[curr] = r1 + r2
+	return results[curr], results
 }
 
 func climbStairs(n int) int {
-	results := _climbStairs(n, 0, []int{}, [][]int{})
-	fmt.Println(results)
-	return len(results)
+	result, _ := _climbStairs(n, 0, make([]int, n+1))
+	return result
 }
