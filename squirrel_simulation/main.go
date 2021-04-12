@@ -83,14 +83,18 @@ func (this *Solution) routeDistance(remainNuts []Point) int {
 		return 0
 	}
 
-	distane := 0
+	min := math.MaxInt64
 	for _, nut := range remainNuts {
 		// 木からナッツ
+		distane := 0
 		treeToNut, _ := this.treeToNuts[nut.Id()]
 		distane += treeToNut * 2
-		distane += this.routeDistance(filter(remainNuts, nut))
+		md := this.routeDistance(filter(remainNuts, nut))
+		if min > md+distane {
+			min = md + distane
+		}
 	}
-	return distane
+	return min
 }
 
 func (this *Solution) minDistance() int {
