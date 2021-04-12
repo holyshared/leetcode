@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 )
@@ -103,22 +102,11 @@ func (this *Solution) minDistance() int {
 		d := 0
 		// リスからナッツ
 		squirrelToNut, _ := this.nutsToSquirrel[nut.Id()]
-
-		fmt.Printf("リスからナッツ: %d = %s -> %s\n", squirrelToNut, this.squirrel.Id(), nut.Id())
-
 		// ナッツから木
 		nutToTree, _ := this.treeToNuts[nut.Id()]
 
-		fmt.Printf("ナッツから木: %d = %s -> %s\n", nutToTree, nut.Id(), this.tree.Id())
-
 		d += squirrelToNut + nutToTree
-
-		fmt.Printf("リスからナッツ、ナッツから木: %d\n", d)
-
 		md := this.routeDistance(filter(this.nuts, nut))
-
-		fmt.Println(md)
-		fmt.Println(nut.Id())
 
 		if min > md+d {
 			min = md + d
