@@ -13,7 +13,7 @@ type PriorityQueue []*Item
 func (pq PriorityQueue) Len() int { return len(pq) }
 
 func (pq PriorityQueue) Less(i, j int) bool {
-	return pq[i].value > pq[j].value
+	return pq[i].value < pq[j].value
 }
 
 func (pq PriorityQueue) Swap(i, j int) {
@@ -34,72 +34,25 @@ func (pq *PriorityQueue) Pop() interface{} {
 	return item
 }
 
-type QueueItem struct {
-	index   int
-	bricks  int
-	ladders int
-}
-
-type Queue []*QueueItem
-
 func furthestBuilding(heights []int, bricks int, ladders int) int {
-	queue := make(Queue, 0)
-	queue = append(queue, &QueueItem{
-		index:   0,
-		bricks:  bricks,
-		ladders: ladders,
-	})
 
-	results := make(PriorityQueue, 0)
+	ladderAllocations := make(PriorityQueue, 0)
 
-	for len(queue) > 0 {
-		item := queue[0]
-		queue = queue[1:]
-
-		nextIndex := item.index + 1
-		if nextIndex > len(heights)-1 {
-			return item.index
-		}
-
-		if heights[item.index] >= heights[nextIndex] {
-			queue = append(queue, &QueueItem{
-				index:   nextIndex,
-				bricks:  item.bricks,
-				ladders: item.ladders,
-			})
+	for i := 0; i < len(heights)-1; i++ {
+		climb := heights[i+1] - heights[i]
+		if climb <= 0 {
 			continue
 		}
-
-		remain := heights[item.index+1] - heights[item.index]
-
-		if item.bricks < remain && item.ladders <= 0 {
-			heap.Push(&results, &Item{
-				value: item.index,
-			})
+		heap.Push(&ladderAllocations, &Item{value: climb})
+		if ladderAllocations.Len() <= ladders {
 			continue
 		}
+		item := heap.Pop(&ladderAllocations).(*Item)
+		bricks -= item.value
 
-		if item.bricks >= remain {
-			queue = append(queue, &QueueItem{
-				index:   nextIndex,
-				bricks:  bricks - remain,
-				ladders: item.ladders,
-			})
-		}
-
-		if item.ladders > 0 {
-			queue = append(queue, &QueueItem{
-				index:   nextIndex,
-				bricks:  item.bricks,
-				ladders: item.ladders - 1,
-			})
+		if bricks < 0 {
+			return i
 		}
 	}
-
-	if results.Len() > 0 {
-		item := heap.Pop(&results).(*Item)
-		return item.value
-	} else {
-		return 0
-	}
+	return len(heights) - 1
 }
