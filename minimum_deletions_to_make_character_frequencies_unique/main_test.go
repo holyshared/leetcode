@@ -26,3 +26,10 @@ func TestSceabaacb(t *testing.T) {
 	}
 }
 
+func TestSee(t *testing.T) {
+	actual := minDeletions("ee")
+
+	if actual != 0 {
+		t.Fatalf("actual = %d, expected = 0", actual)
+	}
+}

@@ -1,36 +1,30 @@
 package main
 
-import (
-	"sort"
-)
+func countByChar(s string) map[rune]int {
+	chars := []rune(s)
+	counts := map[rune]int{}
+	for i := 0; i < len(chars); i++ {
+		counts[chars[i]] += 1
+	}
+	return counts
+}
 
 func minDeletions(s string) int {
-	chars := []rune(s)
-	frequency := make([]int, 26)
-
-	for i := 0; i < len(s); i++ {
-		frequency[chars[i]-'a'] += 1
-	}
-
-	sort.Slice(frequency, func(i, j int) bool {
-		return frequency[i] < frequency[j]
-	})
-
 	deleteCount := 0
-	maxFreqAllowed := len(s)
+	marked := map[int]bool{}
 
-	for i := 25; i >= 0 && frequency[i] > 0; i-- {
-		if frequency[i] > maxFreqAllowed {
-			deleteCount += frequency[i] - maxFreqAllowed
-			frequency[i] = maxFreqAllowed
-		}
+	countChars := countByChar(s)
 
-		if frequency[i]-1 > 0 {
-			maxFreqAllowed = frequency[i] - 1
-		} else {
-			maxFreqAllowed = 0
+	for _, count := range countChars {
+		for {
+			_, has := marked[count]
+			if count <= 0 || !has {
+				break
+			}
+			count -= 1
+			deleteCount += 1
 		}
+		marked[count] = true
 	}
-
 	return deleteCount
 }
