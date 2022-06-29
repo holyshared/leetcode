@@ -16,11 +16,7 @@ func minDeletions(s string) int {
 	countChars := countByChar(s)
 
 	for _, count := range countChars {
-		for {
-			_, has := marked[count]
-			if count <= 0 || !has {
-				break
-			}
+		for count > 0 && marked[count] {
 			count -= 1
 			deleteCount += 1
 		}
