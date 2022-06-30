@@ -6,6 +6,7 @@ import (
 
 func maxBoxesInWarehouse(boxes []int, warehouse []int) int {
 	// 一つ前のより、後の方が大きい場合。一つ前に合わせる
+	// 後が大きくても、手前が小さいので手前の大きさと同等のものしか箱を押し込めない
 	for i := 1; i < len(warehouse); i++ {
 		if warehouse[i-1] < warehouse[i] {
 			warehouse[i] = warehouse[i-1]
