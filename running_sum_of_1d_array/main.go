@@ -1,13 +1,9 @@
 package main
 
 func runningSum(nums []int) []int {
-	curr := 0
-	results := make([]int, len(nums))
-
-	for i := 0; i < len(nums); i++ {
-		curr += nums[i]
-		results[i] = curr
+	results := []int{nums[0]}
+	for i := 1; i < len(nums); i++ {
+		results = append(results, results[i - 1] + nums[i])
 	}
-
 	return results
 }
