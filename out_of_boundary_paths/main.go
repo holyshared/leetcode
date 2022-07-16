@@ -12,7 +12,6 @@ func (this *Finder) dfs(i, j, remain int) int64 {
 	// 範囲外に出た
 	if i < 0 || j < 0 || this.m <= i || this.n <= j {
 		return 1
-		return 0
 	} else if remain <= 0 {
 		return 0
 	}
