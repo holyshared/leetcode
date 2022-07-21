@@ -6,18 +6,11 @@ import (
 
 func match(word string, dict map[rune][]int) bool {
 	curr := 0
-	currPosition := map[rune]int{}
+	used := map[int]bool{}
 
 	for _, c := range []rune(word) {
 		positions, ok := dict[c]
 		if !ok {
-			return false
-		}
-
-		next, _ := currPosition[c]
-
-		// 使えるものがない
-		if next >= len(positions) {
 			return false
 		}
 
@@ -27,8 +20,23 @@ func match(word string, dict map[rune][]int) bool {
 			return false
 		}
 
-		curr = positions[insert]
-		currPosition[c] += 1
+		if positions[insert] == curr {
+		  _, ok := used[curr]
+
+		  if ok {
+		    if len(positions) - 1 < insert + 1 {
+			  return false
+			}
+			curr = positions[insert + 1]
+		  } else {
+			curr = positions[insert]
+		  }
+
+		} else {
+  		  curr = positions[insert]
+		}
+
+		used[curr] = true
 	}
 
 	return true
