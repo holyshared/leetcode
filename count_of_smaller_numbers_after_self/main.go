@@ -25,8 +25,8 @@ func countSmaller(nums []int) []int {
 	result := []int{}
 
 	for i := len(nums) - 1; i >= 0; i-- {
-		smaller_count := query(nums[i]+offset, tree)
-		result = append(result, smaller_count)
+		smallerCount := query(nums[i]+offset, tree)
+		result = append(result, smallerCount)
 		update(nums[i]+offset, 1, tree, size)
 	}
 
