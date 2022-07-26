@@ -6,67 +6,44 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func getRoutes(node, t *TreeNode, routes []*TreeNode) ([]*TreeNode, bool) {
-	if node == nil {
-		return routes, false
+type Solution struct {
+	ans *TreeNode
+}
+
+// 現在のノードから該当するノードを検索する
+func (this *Solution) recurseTree(currentNode *TreeNode, p *TreeNode, q *TreeNode) bool {
+	if currentNode == nil {
+		return false
 	}
 
-	if node == t {
-		routes = append(routes, node)
-		return routes, true
+	left, right := 0, 0
+	if this.recurseTree(currentNode.Left, p, q) {
+		left = 1
 	}
-	routes = append(routes, node)
-
-	if node.Left != nil {
-		routes, ok := getRoutes(node.Left, t, routes)
-		if ok {
-			return routes, ok
-		}
-		routes = routes[:(len(routes) - 1)]
+	if this.recurseTree(currentNode.Right, p, q) {
+		right = 1
 	}
 
-	if node.Right != nil {
-		routes, ok := getRoutes(node.Right, t, routes)
-		if ok {
-			return routes, ok
-		}
-		routes = routes[:(len(routes) - 1)]
+	mid := 0
+	if currentNode == p || currentNode == q {
+		mid = 1
 	}
 
-	return routes, false
+	// X 左右で見つかるパターン left = 1, right = 1, mid = 0
+	// X 左で見つかり、現在のノードと一致 left = 1, right = 0, mid = 1
+	// X 右で見つかり、現在のノードと一致 left = 0, right = 1, mid = 1
+	//   左右で見つからず、現在のノードと一致 left = 0, right = 0, mid = 1
+	if mid+left+right >= 2 {
+		this.ans = currentNode
+	}
+
+	return (mid+left+right > 0)
 }
 
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-	pRoutes, _ := getRoutes(root, p, []*TreeNode{})
-	qRoutes, _ := getRoutes(root, q, []*TreeNode{})
-
-	dep := map[*TreeNode]bool{}
-
-	i := len(pRoutes) - 1
-	j := len(qRoutes) - 1
-	for i >= 0 || j >= 0 {
-		if i >= 0 {
-			pp := pRoutes[i]
-
-			_, ok1 := dep[pp]
-			if ok1 {
-				return pp
-			}
-			dep[pp] = true
-			i--
-		}
-
-		if j >= 0 {
-			qp := qRoutes[j]
-
-			_, ok2 := dep[qp]
-			if ok2 {
-				return qp
-			}
-			dep[qp] = true
-			j--
-		}
+	so := &Solution{
+		ans: nil,
 	}
-
-	return nil
+	so.recurseTree(root, p, q)
+	return so.ans
 }
