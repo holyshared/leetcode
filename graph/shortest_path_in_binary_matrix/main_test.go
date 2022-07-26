@@ -28,3 +28,22 @@ func TestC(t *testing.T) {
 		t.Fatalf("actual = %d, expected = 2", actual)
 	}
 }
+
+
+
+func TestD(t *testing.T) {
+	matrix := [][]int{
+		{0, 1, 0, 0, 1, 1, 0},
+		{1, 0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 1, 1, 1, 1},
+		{0, 1, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0},
+		{1, 0, 1, 0, 0, 1, 0},
+	}
+	actual := shortestPathBinaryMatrix(matrix)
+
+	if actual != 7 {
+		t.Fatalf("actual = %d, expected = 7", actual)
+	}
+}
