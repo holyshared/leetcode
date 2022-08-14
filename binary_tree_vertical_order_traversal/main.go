@@ -1,52 +1,60 @@
 package main
 
+import (
+	"sort"
+)
+
 type TreeNode struct {
-	Val int
-	Left *TreeNode
+	Val   int
+	Left  *TreeNode
 	Right *TreeNode
 }
 
-type Solution struct {
-	results [][]int
-}
-
-func (this *Solution) traverse(node *TreeNode, score int) {
-	if node == nil {
-		return
-	}
-
-	if node.Left != nil {
-		this.traverse(node.Left, score - 1)
-	}
-
-	this.results = append(this.results, []int{node.Val, score})
-
-	if node.Right != nil {
-		this.traverse(node.Right, score + 1)
-	}
-}
-
-func (this *Solution) Grouping(node *TreeNode, score int) [][]int {
-	this.traverse(node, 0)
-	results := [][]int{[]int{this.results[0][0]}}
-
-	j := 0
-	curr := this.results[0][1]
-	for i := 1; i < len(this.results); i++ {
-		val, score := this.results[i][0], this.results[i][1]
-		if curr == score {
-			results[j] = append(results[j], val)
-		} else {
-			j++
-			results = append(results, []int{})
-			results[j] = append(results[j], val)
-			curr = score
-		}
-	}
-	return results
+type Pair struct {
+	Column int
+	Node   *TreeNode
 }
 
 func verticalOrder(root *TreeNode) [][]int {
-	sol := &Solution{ results: [][]int{} }
-	return sol.Grouping(root, 0)
+	output := [][]int{}
+
+	if root == nil {
+		return output
+	}
+	columnTable := map[int][]int{}
+
+	column := 0
+	queue := []*Pair{&Pair{Node: root, Column: column}}
+
+	for len(queue) > 0 {
+		curr := queue[0]
+		queue = queue[1:]
+
+		if curr.Node != nil {
+			vals, has := columnTable[curr.Column]
+			if !has {
+				columnTable[curr.Column] = []int{curr.Node.Val}
+			} else {
+				vals = append(vals, curr.Node.Val)
+				columnTable[curr.Column] = vals
+			}
+			queue = append(queue, &Pair{Node: curr.Node.Left, Column: curr.Column - 1})
+			queue = append(queue, &Pair{Node: curr.Node.Right, Column: curr.Column + 1})
+		}
+	}
+
+	keys := []int{}
+	for k, _ := range columnTable {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i] < keys[j]
+	})
+
+	for _, k := range keys {
+		val, _ := columnTable[k]
+		output = append(output, val)
+	}
+
+	return output
 }
