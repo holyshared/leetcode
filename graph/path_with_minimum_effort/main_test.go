@@ -45,3 +45,15 @@ func TestD(t *testing.T) {
 		t.Fatalf("actual = %d, expected = 0", actual)
 	}
 }
+
+
+func TestE(t *testing.T) {
+	heights := [][]int{
+		{1,10,6,7,9,10,4,9}
+	}
+	actual := minimumEffortPath(heights)
+
+	if actual != 9 {
+		t.Fatalf("actual = %d, expected = 9", actual)
+	}
+}
