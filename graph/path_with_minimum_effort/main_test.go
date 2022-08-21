@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestA(t *testing.T) {
-	heights := [][]int{{1,2,2},{3,8,2},{5,3,5}}
+	heights := [][]int{{1, 2, 2}, {3, 8, 2}, {5, 3, 5}}
 	actual := minimumEffortPath(heights)
 
 	if actual != 2 {
@@ -13,9 +13,9 @@ func TestA(t *testing.T) {
 
 func TestB(t *testing.T) {
 	heights := [][]int{
-		{1,2,3},
-			{3,8,4},
-				{5,3,5},
+		{1, 2, 3},
+		{3, 8, 4},
+		{5, 3, 5},
 	}
 	actual := minimumEffortPath(heights)
 
@@ -26,7 +26,7 @@ func TestB(t *testing.T) {
 
 func TestC(t *testing.T) {
 	heights := [][]int{
-		{1,2,1,1,1},{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1},{1,1,1,2,1},
+		{1, 2, 1, 1, 1}, {1, 2, 1, 2, 1}, {1, 2, 1, 2, 1}, {1, 2, 1, 2, 1}, {1, 1, 1, 2, 1},
 	}
 	actual := minimumEffortPath(heights)
 
@@ -46,10 +46,9 @@ func TestD(t *testing.T) {
 	}
 }
 
-
 func TestE(t *testing.T) {
 	heights := [][]int{
-		{1,10,6,7,9,10,4,9}
+		{1, 10, 6, 7, 9, 10, 4, 9},
 	}
 	actual := minimumEffortPath(heights)
 
