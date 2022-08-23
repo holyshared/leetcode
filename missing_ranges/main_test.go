@@ -25,8 +25,53 @@ func TestA(t *testing.T) {
 }
 
 func TestB(t *testing.T) {
-	expected := []string{"-9->-1", "2", "4->49", "51->74"}
+	expected := []string{"-10->-1", "2", "4->49", "51->74"}
 	actual := findMissingRanges([]int{0, 1, 3, 50, 75}, -10, 75)
+
+	if !expect(actual, expected) {
+		t.Fatalf("actual = %v, expected = %v", actual, expected)
+	}
+}
+
+func TestC(t *testing.T) {
+	expected := []string{"1"}
+	actual := findMissingRanges([]int{}, 1, 1)
+
+	if !expect(actual, expected) {
+		t.Fatalf("actual = %v, expected = %v", actual, expected)
+	}
+}
+
+func TestD(t *testing.T) {
+	expected := []string{"-1"}
+	actual := findMissingRanges([]int{}, -1, -1)
+
+	if !expect(actual, expected) {
+		t.Fatalf("actual = %v, expected = %v", actual, expected)
+	}
+}
+
+func TestE(t *testing.T) {
+	expected := []string{"-3->-1"}
+	actual := findMissingRanges([]int{}, -3, -1)
+
+	if !expect(actual, expected) {
+		t.Fatalf("actual = %v, expected = %v", actual, expected)
+	}
+}
+
+func TestF(t *testing.T) {
+	expected := []string{"-2"}
+	actual := findMissingRanges([]int{-1}, -2, -1)
+
+	if !expect(actual, expected) {
+		t.Fatalf("actual = %v, expected = %v", actual, expected)
+	}
+}
+
+func TestG(t *testing.T) {
+	expected := []string{"-2", "0"}
+	actual := findMissingRanges([]int{-1}, -2, 0)
 
 	if !expect(actual, expected) {
 		t.Fatalf("actual = %v, expected = %v", actual, expected)
